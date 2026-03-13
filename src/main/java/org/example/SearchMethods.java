@@ -22,7 +22,7 @@ public class SearchMethods {
     //Hur många unika genrer hade filmerna från 1975   ~Högre ordnings funktion~
     public long howManyUniqueGenres(List<Movie> movieList){
         //return movieList.stream().filter(m -> m.getYear()==1975).map(Movie::getGenres).distinct().count();
-        return movieList.stream().filter(movieFromYear(1975)).map(Movie::getGenres).distinct().count();
+        return movieList.stream().filter(movieFromYear(1975)).flatMap(m -> m.getGenres().stream()).distinct().count();
     }
     //Vilka skådisar som spelade i den film som hade högst imdb-rating.
     public List<String> actorsInHighestRatedMovie (List<Movie> movieList){
@@ -30,7 +30,7 @@ public class SearchMethods {
     }
     //Vad är titeln på den film som hade minst antal skådisar listade
     public String movieWithTheFewestActorsListed (List<Movie> movieList){
-        return movieList.stream().min(Comparator.comparing(m -> m.getCast().size())).map(Movie::getTitle).orElse("");
+        return movieList.stream().min(Comparator.comparing(m -> m.getCast().size())).map(Movie::getTitle).orElse(null);
     }
     //Hur många skådisar var med i mer än 1 film?
     public long amountOfActorsInMoreThanOneMovie (List<Movie> movieList){
@@ -46,7 +46,7 @@ public class SearchMethods {
     }
     //Hur många unika språk har filmerna
     public long allUniqueLanguages (List<Movie> movieList){
-        return movieList.stream().map(m -> m.getLanguages()).distinct().count();
+        return movieList.stream().flatMap(m -> m.getLanguages().stream()).distinct().count();
     }
     //Finns det några dubletter av film titlar
     public Boolean anyDoubletteTitles (List<Movie> movieList){

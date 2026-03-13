@@ -45,7 +45,7 @@ class SearchMethodsTest {
     }
     @Test
     void testHowManyUniqueGenres() {
-        assertEquals(5, searchMethods.howManyUniqueGenres(testMovies));
+        assertEquals(6, searchMethods.howManyUniqueGenres(testMovies));
     }
     @Test
     void testActorsInHighestRatedMovie(){
